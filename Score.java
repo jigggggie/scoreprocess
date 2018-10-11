@@ -9,8 +9,8 @@ class Student {
 	private int math;
 	private char grade;
 	Student (String name, String id, int kor, int eng, int math){
-		this.id = name;
-		this.name = id;
+		this.name = name;
+		this.id = id;
 		this.kor = kor;
 		this.eng = eng;
 		this.math = math;
@@ -34,7 +34,7 @@ class Student {
 		}
 	}
 	public void printStudent() {
-		System.out.println(this.id + " " + this.name + " " + this.grade);
+		System.out.println(this.id + " " + this.name + "    " + this.grade);
 	}
 }
 
@@ -54,7 +54,7 @@ public class Score {
 		System.out.print("수학성적 : ");
 		int math = s.nextInt();
 		s.nextLine();
-		s.close();
+		
 		Student a = new Student(name, id, kor, eng, math);
 		return a;		
 	}
@@ -63,6 +63,7 @@ public class Score {
 			Student t = list.get(i);
 			t.printStudent();
 		}
+		System.out.println();
 	}
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
@@ -75,10 +76,12 @@ public class Score {
 			int sel = s.nextInt();
 			switch (sel) {
 			case 1:
-				
+				list.add(addStudent());
 				break;
 			case 2:
-				
+				System.out.println("학번              이름       학점");
+				System.out.println("==================");
+				printlist(list);
 				break;
 			case 3:
 				break;
