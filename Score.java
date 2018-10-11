@@ -3,20 +3,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Student {
-	private String name;
+	String name;
 	int id;
-	private int kor;
-	private int eng;
-	private int math;
-	private char grade;
-	Student (String name, int id, int kor, int eng, int math){
+	int kor;
+	int eng;
+	int math;
+	char grade;
+
+	Student(String name, int id, int kor, int eng, int math) {
 		this.name = name;
 		this.id = id;
 		this.kor = kor;
 		this.eng = eng;
 		this.math = math;
-		this.grade = getGrade(this.kor, this.eng, this.math); 
+		this.grade = getGrade(this.kor, this.eng, this.math);
 	}
+
+	Student(String name, int id, char grade) {
+		this.name = name;
+		this.id = id;
+		this.grade = grade;
+		setGrade(this.grade);
+	}
+
 	public char getGrade(int kor, int eng, int math) {
 		int sum = kor + eng + math;
 		int avg = sum / 3;
@@ -30,24 +39,52 @@ class Student {
 			return 'C';
 		case 6:
 			return 'D';
-		default :
-			return 'F';			
+		default:
+			return 'F';
 		}
 	}
+
+	public void setGrade(char grade) {
+		if (grade == 'A') {
+			this.kor = 90;
+			this.eng = 90;
+			this.math = 90;
+		} else if (grade == 'B') {
+			this.kor = 80;
+			this.eng = 80;
+			this.math = 80;
+		} else if (grade == 'C') {
+			this.kor = 70;
+			this.eng = 70;
+			this.math = 70;
+		} else if (grade == 'D') {
+			this.kor = 60;
+			this.eng = 60;
+			this.math = 60;
+		} else {
+			this.kor = 50;
+			this.eng = 50;
+			this.math = 50;
+		}
+	}
+
 	public void printStudent() {
 		System.out.println(this.id + " " + this.name + "    " + this.grade);
 	}
 }
 
-class StudentComparator implements Comparator<Student>{
+class StudentComparator implements Comparator<Student> {
 
 	@Override
 	public int compare(Student arg0, Student arg1) {
-		if (arg0.id < arg1.id) return -1;
-		else if(arg0.id == arg1.id) return 0;
-		else return 1;
+		if (arg0.id < arg1.id)
+			return -1;
+		else if (arg0.id == arg1.id)
+			return 0;
+		else
+			return 1;
 	}
-	
+
 }
 
 public class Score {
@@ -67,16 +104,18 @@ public class Score {
 		System.out.print("荐切己利 : ");
 		int math = s.nextInt();
 		s.nextLine();
-		
+
 		return new Student(name, id, kor, eng, math);
 	}
+
 	public static void printlist(Vector<Student> list) {
-		for(int i =0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++) {
 			Student t = list.get(i);
 			t.printStudent();
 		}
 		System.out.println();
 	}
+
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		System.out.println("己利贸府 橇肺弊伐 ");
@@ -99,9 +138,24 @@ public class Score {
 			case 3:
 				break;
 			}
-			if (sel == 3) break;
+			if (sel == 3)
+				break;
 		}
-		
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter("score.txt");
+			for (int i = 0; i < list.size(); i++) {
+				writer.write(list.get(i).id + " ");
+				writer.write(list.get(i).name + " ");
+				writer.write(list.get(i).grade + "\r\n");
+			}
+		} catch (IOException ioe) {
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception e) {
+			}
+		}
 	}
 
 }
