@@ -1,14 +1,15 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Student {
 	private String name;
-	private String id;
+	int id;
 	private int kor;
 	private int eng;
 	private int math;
 	private char grade;
-	Student (String name, String id, int kor, int eng, int math){
+	Student (String name, int id, int kor, int eng, int math){
 		this.name = name;
 		this.id = id;
 		this.kor = kor;
@@ -38,13 +39,25 @@ class Student {
 	}
 }
 
+class StudentComparator implements Comparator<Student>{
+
+	@Override
+	public int compare(Student arg0, Student arg1) {
+		if (arg0.id < arg1.id) return -1;
+		else if(arg0.id == arg1.id) return 0;
+		else return 1;
+	}
+	
+}
+
 public class Score {
 	public static Student addStudent() {
 		Scanner s = new Scanner(System.in);
 		System.out.print("이름 : ");
 		String name = s.nextLine();
 		System.out.print("학번 : ");
-		String id = s.nextLine();
+		int id = s.nextInt();
+		s.nextLine();
 		System.out.print("국어성적 : ");
 		int kor = s.nextInt();
 		s.nextLine();
@@ -55,8 +68,7 @@ public class Score {
 		int math = s.nextInt();
 		s.nextLine();
 		
-		Student a = new Student(name, id, kor, eng, math);
-		return a;		
+		return new Student(name, id, kor, eng, math);
 	}
 	public static void printlist(Vector<Student> list) {
 		for(int i =0; i < list.size(); i++) {
@@ -77,6 +89,7 @@ public class Score {
 			switch (sel) {
 			case 1:
 				list.add(addStudent());
+				Collections.sort(list, new StudentComparator());
 				break;
 			case 2:
 				System.out.println("학번              이름       학점");
