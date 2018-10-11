@@ -120,6 +120,21 @@ public class Score {
 		Scanner s = new Scanner(System.in);
 		System.out.println("성적처리 프로그램 ");
 		Vector<Student> list = new Vector<Student>();
+		File f = new File("score.txt");
+		Scanner fs;
+		try {
+			fs = new Scanner(f);
+			while(fs.hasNext()) {
+				int fid = Integer.parseInt(fs.next());
+				String fname = fs.next();
+				char fgrade = fs.next().charAt(0);
+				Student t = new Student(fname, fid, fgrade);
+				list.add(t);
+				Collections.sort(list, new StudentComparator());
+			}
+		} catch (FileNotFoundException e1) {
+			
+		}
 		
 		while (true) {
 			System.out.println("1.성적입력  2.전체조회  3.종료 ");
