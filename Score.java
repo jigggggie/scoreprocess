@@ -124,7 +124,7 @@ public class Score {
 		Scanner fs;
 		try {
 			fs = new Scanner(f);
-			while(fs.hasNext()) {
+			while (fs.hasNext()) {
 				int fid = Integer.parseInt(fs.next());
 				String fname = fs.next();
 				char fgrade = fs.next().charAt(0);
@@ -133,9 +133,9 @@ public class Score {
 				Collections.sort(list, new StudentComparator());
 			}
 		} catch (FileNotFoundException e1) {
-			
+
 		}
-		
+
 		while (true) {
 			System.out.println("1.성적입력  2.전체조회  3.종료 ");
 			System.out.print(">>>");
